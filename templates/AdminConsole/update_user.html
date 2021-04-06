@@ -39,17 +39,9 @@
                          </div>
                     </div>
                     <div class="col-md-6">
-                         <div class="form-group">
-                            <label>Email</label>
-                            <input name="email"  type="email" class="form-control" style="color:black" value="{{details.email}}" required="">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label>Date Of Birth</label>
-                            <input name="date_of_birth"  type="date" class="form-control" style="color:black"  required="">
+                            <input name="date_of_birth"  type="date" class="form-control" style="color:black" value="{{details.date_of_birth|date:'Y-m-d'}}" required="">
                          </div>
                     </div>
                 </div>
@@ -58,11 +50,9 @@
                      <div class="form-group">
                          <label>Designation : </label>
                          <select name="designation">
-                           <option>Select</option>
-                           <option>Cleaner</option>
-                           <option>Supervisor</option>
-                           <option>Cordinator</option>
-                           <option>Driver</option>
+                         {% for designation in designations %}
+                       <option>{{designation}}</option>
+                         {% endfor %}
                          </select>
                        </div>
                     </div>
@@ -70,7 +60,7 @@
                     <div class="form-group">
                      <label>Manager : </label>
                      <select name="manager">
-                         <option>select</option>
+                         <option>{{details.manager}}</option>
                          {% for manager in managers %}
                        <option>{{manager.first_name}}{{manager.last_name}}</option>
                          {% endfor %}

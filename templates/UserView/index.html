@@ -1,0 +1,11 @@
+{% extends 'UserView/base.html' %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<h2>Hi {{request.user}}, Whats Up...? welcome ..!</h2>
+<h2>View your Profile <a href="{% url 'user_profile' %}">here</a></h2>
+{% else %}
+<h2>Please <a href="{% url 'login' %}">Login</a> to continue </h2>
+{% endif %}
+
+{% endblock %}

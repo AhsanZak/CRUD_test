@@ -17,7 +17,7 @@ def admin_panel(request):
         }
         return render(request, 'AdminConsole/index.html', context)
     else:
-        return redirect(admin_panel)
+        return redirect(login)
 
 
 def login(request):
@@ -49,7 +49,6 @@ def create_user(request):
         if request.method == 'POST':
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
-            email = request.POST['email']
             username = request.POST['username']
             password1 = request.POST['password1']
             password2 = request.POST['password2']
@@ -61,21 +60,16 @@ def create_user(request):
                 if User.objects.filter(username=username).exists():
                     messages.info(request, "Username Taken")
                     return render(request, 'AdminConsole/register_user.html')
-                elif User.objects.filter(email=email).exists():
-                    messages.info(request, "Email Taken")
-                    return render(request, 'AdminConsole/register_user.html')
-                elif User.objects.filter(last_name=last_name).exists():
-                    messages.info(request, "Mobile Number Taken")
-                    return render(request, 'AdminConsole/register_user.html')
                 else:
-                    user = User.objects.create_user(username=username, password=password1, email=email,
+                    user = User.objects.create_user(username=username, password=password1,
                                                     first_name=first_name, last_name=last_name, manager=manager, 
                                                     designation=designation, date_of_birth=date_of_birth)
                     return redirect(admin_panel)
             else:
                 messages.info(request, "Passwords not Matching")
         else:
-            return render(request, 'AdminConsole/register_user.html')
+            designations = {"Manager", "Supervisor", "Cleaner", "Driver", "Coordinator", "Project Lead"}
+            return render(request, 'AdminConsole/register_user.html', {'designations': designations})
     else:
         return redirect(admin_panel)
 
@@ -83,7 +77,9 @@ def create_user(request):
 def update_user(request, id):
     if request.user.is_authenticated and request.user.is_superuser == True:
         user = User.objects.get(id=id)
-        return render(request, 'AdminConsole/update_user.html', {'details': user})
+        designations = {"Manager", "Supervisor", "Cleaner", "Driver", "Coordinator", "Project Lead"}
+        managers = User.objects.filter(designation="Manager")
+        return render(request, 'AdminConsole/update_user.html', {'details': user, 'managers':managers, 'designations': designations})
     else:
         return redirect(admin_panel)
 
@@ -94,7 +90,6 @@ def edit_user(request, id):
             user = User.objects.get(id=id)
             user.first_name = request.POST['first_name']
             user.last_name = request.POST['last_name']
-            user.email = request.POST['email']
             user.username = request.POST['username']
             user.designation = request.POST['designation']
             user.manager = request.POST['manager']

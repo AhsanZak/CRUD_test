@@ -12,7 +12,7 @@ class User(AbstractUser):
     @property
     def ImageURL(self):
         try:
-            url = self.user_image.url
+            url = self.profile_image.url
         except ValueError:
             url = ''
         return url

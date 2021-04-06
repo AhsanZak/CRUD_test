@@ -21,7 +21,6 @@
                                         <th>Name</th>
                                         <th>Designation</th>
                                         <th>Manager</th>
-                                        <th>Email</th>
                                         <th>Date of Joining</th>
                                         <th></th>
 
@@ -34,7 +33,6 @@
                                         <td>{{user.first_name}} {{user.last_name}}</td>
                                         <td>{{user.designation}}</td>
                                         <td>{{user.manager}}</td>
-                                        <td>{{user.email}}</td>
                                         <td>{{user.date_joined}}</td>
                                         <td class="teusert-right">
                                             <a href="{% url 'update_user' user.id %}" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
