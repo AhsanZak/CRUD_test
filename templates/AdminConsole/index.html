@@ -1,0 +1,52 @@
+{% extends 'AdminConsole/base.html' %}
+{% block content %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Manage User</h1>
+          </div>
+
+          <hr>
+
+          <!-- Content Row -->
+
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table width="100%" class="table table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Designation</th>
+                                        <th>Manager</th>
+                                        <th>Email</th>
+                                        <th>Date of Joining</th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in user %}
+                                    <tr>
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.first_name}} {{user.last_name}}</td>
+                                        <td>{{user.designation}}</td>
+                                        <td>{{user.manager}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.date_joined}}</td>
+                                        <td class="teusert-right">
+                                            <a href="{% url 'update_user' user.id %}" class="btn btn-outline-info btn-rounded"><i class="fas fa-pen"></i></a>
+                                            <a href="{% url 'delete_user' user.id %}" type="submit" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+        </div>
+        <!-- /.container-fluid -->
+{% endblock %}
