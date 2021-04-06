@@ -56,10 +56,13 @@ def create_user(request):
             manager = request.POST['manager']
             date_of_birth = request.POST['date_of_birth']
 
+            managers = User.objects.filter(designation="Manager")
+            designations = {"Manager", "Supervisor", "Cleaner", "Driver", "Coordinator", "Project Lead"}
+
             if password1 == password2:
                 if User.objects.filter(username=username).exists():
                     messages.info(request, "Username Taken")
-                    return render(request, 'AdminConsole/register_user.html')
+                    return render(request, 'AdminConsole/register_user.html', {'designations': designations, 'managers':managers})
                 else:
                     user = User.objects.create_user(username=username, password=password1,
                                                     first_name=first_name, last_name=last_name, manager=manager, 
@@ -67,9 +70,9 @@ def create_user(request):
                     return redirect(admin_panel)
             else:
                 messages.info(request, "Passwords not Matching")
+                return render(request, 'AdminConsole/register_user.html', {'designations': designations, 'managers':managers})
         else:
-            designations = {"Manager", "Supervisor", "Cleaner", "Driver", "Coordinator", "Project Lead"}
-            return render(request, 'AdminConsole/register_user.html', {'designations': designations})
+            return render(request, 'AdminConsole/register_user.html', {'designations': designations, 'managers':managers})
     else:
         return redirect(admin_panel)
 

@@ -1,78 +1,88 @@
 {% extends 'AdminConsole/base.html' %}
 {% block content %}
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Edit Details</h1>
-          </div>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Edit Details</h1>
+    </div>
 
-            <div class="form">
-            {% for message in messages %}
-                <div class="message">
-                    <h4>{{message}}</h4>
-                </div>
-            {% endfor %}
-            <form action="{% url 'edit_user' details.id %}" method="POST" class="form-group">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input name="first_name"  type="text" class="form-control" style="color:black" value="{{details.first_name}}" required="">
-                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input name="last_name"  type="text" class="form-control" style="color:black" value="{{details.last_name}}" required="">
-                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>User Name</label>
-                            <input name="username"  type="text" class="form-control" style="color:black" value="{{details.username}}" required="">
-                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Date Of Birth</label>
-                            <input name="date_of_birth"  type="date" class="form-control" style="color:black" value="{{details.date_of_birth|date:'Y-m-d'}}" required="">
-                         </div>
-                    </div>
-                </div>
-                 <div class="row">
-                    <div class="col-md-6">
-                     <div class="form-group">
-                         <label>Designation : </label>
-                         <select name="designation">
-                         {% for designation in designations %}
-                       <option>{{designation}}</option>
-                         {% endfor %}
-                         </select>
-                       </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
-                     <label>Manager : </label>
-                     <select name="manager">
-                         <option>{{details.manager}}</option>
-                         {% for manager in managers %}
-                       <option>{{manager.first_name}}{{manager.last_name}}</option>
-                         {% endfor %}
-                     </select>
-                   </div>
-                 </div>
-                </div>
-                <button class="btn btn-primary shadow-2 mb-4">Update</button>
-            </form>
-           </div>
-
+    <div class="form">
+        {% for message in messages %}
+        <div class="message">
+            <h4>{{message}}</h4>
         </div>
-        <!-- /.container-fluid -->
+        {% endfor %}
+        <form action="{% url 'edit_user' details.id %}" method="POST" class="form-group">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input name="first_name" type="text" class="form-control" style="color:black"
+                            value="{{details.first_name}}" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input name="last_name" type="text" class="form-control" style="color:black"
+                            value="{{details.last_name}}" required="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input name="username" type="text" class="form-control" style="color:black"
+                            value="{{details.username}}" required="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Date Of Birth</label>
+                        <input name="date_of_birth" type="date" class="form-control" style="color:black"
+                            value="{{details.date_of_birth|date:'Y-m-d'}}" required="">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Designation : </label>
+                        <select name="designation" id="designation-sel">
+                            {% for designation in designations %}
+                            <option value="{{designation}}">{{designation}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Manager : </label>
+                        <select name="manager" id="manager-sel">
+                            {% for manager in managers %}
+                            <option value="{{manager.username}}">{{manager.first_name}}{{manager.last_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary shadow-2 mb-4">Update</button>
+        </form>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+<script>
+    $(document).ready(() => {
+        $("#designation-sel").val('{{details.designation}}');
+        $("#manager-sel").val('{{details.manager}}');
+    });
+
+</script>
 
 {% endblock %}
